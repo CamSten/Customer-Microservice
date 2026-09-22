@@ -28,7 +28,12 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerServiceTest {
-
+    @Container
+    @ServiceConnection
+    static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
+            .withDatabaseName("customerDB")
+            .withUsername("test")
+            .withPassword("test");
     private final Long id = -1L;
     @Mock
     private RestTemplateConfig restTemplateConfig;
