@@ -28,12 +28,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerServiceTest {
-    @Container
-    @ServiceConnection
-    static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
-            .withDatabaseName("customerDB")
-            .withUsername("test")
-            .withPassword("test");
+
     private final Long id = -1L;
     @Mock
     private RestTemplateConfig restTemplateConfig;
@@ -61,14 +56,13 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerByIdReturnsCustomer() {
-        Long wrongId = -2L;
-        when(customerRepo.findById(wrongId)).thenReturn(Optional.of(customer));
-        CustomerDTO result = customerService.getCustomerById(wrongId);
+        when(customerRepo.findById(id)).thenReturn(Optional.of(customer));
+        CustomerDTO result = customerService.getCustomerById(id);
 
         assertNotNull(result);
         assertEquals("Test Customer", result.getName());
 
-        verify(customerRepo).findById(wrongId);
+        verify(customerRepo).findById(id);
     }
 
     @Test
