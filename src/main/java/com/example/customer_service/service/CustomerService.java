@@ -3,6 +3,7 @@ package com.example.customer_service.service;
 import com.example.customer_service.config.RestTemplateConfig;
 import com.example.customer_service.model.*;
 import com.example.customer_service.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class CustomerService {
     private final CustomerRepository customerRepo;
     private final RestTemplate restTemplate;
     private final PasswordEncoder passwordEncoder;
+    @Value("${booking.service.url}")
+    private String bookingServiceUrl;
 
     public CustomerService(RestTemplateConfig restTemplateConfig, CustomerRepository customerRepo, PasswordEncoder passwordEncoder) {
         this.customerRepo = customerRepo;
@@ -110,7 +113,7 @@ public class CustomerService {
 
     public ResponseEntity<Boolean> hasActiveBooking(Long customerId) {
         try {
-            return restTemplate.getForEntity("http://booking-service:8080/bookings/customer/" + customerId
+            return restTemplate.getForEntity(bookingServiceUrl + customerId
                     + "/has-active-booking", Boolean.class);
         }
         catch (HttpStatusCodeException e) {
