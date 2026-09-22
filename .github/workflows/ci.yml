@@ -24,7 +24,7 @@ jobs:
         with:
           username: ${{ secrets.DH_ACCOUNT }}
           password: ${{ secrets.DH_ACCESS_TOKEN }}
-testing error.
+
       - name: Build Docker image
         run: docker build -t reviendra/customer-service:latest .
 
