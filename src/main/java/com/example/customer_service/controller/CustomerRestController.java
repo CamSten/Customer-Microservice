@@ -51,7 +51,9 @@ public class CustomerRestController {
     public ResponseEntity<LoginResponseDTO> registerCustomer(@RequestBody CustomerDTO customer) {
         CustomerResult result = customerService.signupRequestIsValid(customer);
         if (result.feedback() != Feedback.OK) {
-            return ResponseEntity.status(getStatusFromFeedback(result.feedback(), true)).build();
+            String f = result.feedback().toString();
+            return ResponseEntity.status(getStatusFromFeedback(result.feedback(), true)).body(new LoginResponseDTO(
+                    new CustomerDTO(-10L, f, "ERRORRR", "" , ""), null));
         }
         String token = jwtService.generateToken(result.dto().getId(), result.dto().getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponseDTO(result.dto(), token));
