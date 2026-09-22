@@ -61,7 +61,7 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerByIdReturnsCustomer() {
-        Long wrongId = -1L;
+        Long wrongId = -2L;
         when(customerRepo.findById(wrongId)).thenReturn(Optional.of(customer));
         CustomerDTO result = customerService.getCustomerById(wrongId);
 
