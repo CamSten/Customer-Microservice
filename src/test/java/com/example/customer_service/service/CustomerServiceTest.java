@@ -61,13 +61,14 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerByIdReturnsCustomer() {
-        when(customerRepo.findById(id)).thenReturn(Optional.of(customer));
-        CustomerDTO result = customerService.getCustomerById(id);
+        Long wrongId = -1L;
+        when(customerRepo.findById(wrongId)).thenReturn(Optional.of(customer));
+        CustomerDTO result = customerService.getCustomerById(wrongId);
 
         assertNotNull(result);
         assertEquals("Test Customer", result.getName());
 
-        verify(customerRepo).findById(id);
+        verify(customerRepo).findById(wrongId);
     }
 
     @Test
